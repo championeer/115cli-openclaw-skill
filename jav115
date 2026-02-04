@@ -1,0 +1,5 @@
+#!/bin/bash
+# jav115 wrapper - 一键javdb搜索+115云下载
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+source "$SCRIPT_DIR/venv/bin/activate"
+python "$SCRIPT_DIR/jav115.py" "$@"
