@@ -1,104 +1,63 @@
-# 115cli Skill - JavDB搜索 + 115网盘云下载
+---
+name: 115cli
+description: JavDB搜索 + 115网盘云下载CLI。用于搜索日本影片番号获取磁力链接，并自动添加到115网盘离线下载。当用户提到下载番号、115网盘、javdb搜索、磁力下载时使用此skill。
+---
+
+# 115cli
 
 从javdb.com搜索影片并自动添加到115网盘云下载。
 
 ## 安装
 
-首次使用需要初始化虚拟环境：
+首次使用需初始化虚拟环境：
 
 ```bash
-cd /Users/dev/.openclaw/workspace/115cli
+cd <skill_dir>
 python3 -m venv venv
 source venv/bin/activate
-pip install p115client click rich
+pip install -r requirements.txt
 ```
 
 ## 登录115网盘
 
-使用cookie登录（从浏览器复制）：
+从浏览器复制cookie后运行：
 
 ```bash
-./115cli login --cookie 'CID=xxx; UID=xxx; ...'
+scripts/115cli login --cookie 'CID=xxx; UID=xxx; SEID=xxx; ...'
 ```
 
-## 使用
+Cookie存储在 `~/.115cli/cookie.txt`。
+
+## 命令
 
 ### 一键下载（推荐）
 
 ```bash
-# 搜索并添加到云下载
-./jav115 download "番号或关键词"
-
-# 指定保存目录
-./jav115 download "SSIS-917" -s 目录ID
-
-# 等待下载完成
-./jav115 download "SSIS-917" -w
+scripts/jav115 download "番号"      # 搜索并下载
+scripts/jav115 download "番号" -w   # 等待下载完成
 ```
 
 ### 分步操作
 
 ```bash
-# 仅搜索
-./jav115 search "关键词"
-
-# 获取磁力链接
-./jav115 magnet "SSIS-917"
-
-# 查看云下载任务
-./jav115 tasks
-
-# 浏览115目录
-./jav115 ls /
-./jav115 ls 目录ID
+scripts/jav115 search "关键词"      # 搜索
+scripts/jav115 magnet "番号"        # 获取磁力链接
+scripts/jav115 tasks                # 查看云下载任务
+scripts/jav115 ls /                 # 浏览115目录
 ```
 
-### 115cli单独使用
+### 115cli直接使用
 
 ```bash
-# 登录
-./115cli login --cookie 'cookie字符串'
-
-# 添加磁力云下载
-./115cli download "magnet:?xt=urn:btih:..."
-
-# 查看任务
-./115cli tasks
-
-# 列出目录
-./115cli ls /
-
-# 搜索文件
-./115cli search "关键词"
-
-# 移动文件
-./115cli mv 文件ID 目标目录ID
-```
-
-## 工作流程
-
-1. 用户提供番号/关键词
-2. 搜索javdb.com获取影片列表
-3. 用户选择目标影片
-4. 获取磁力链接
-5. 添加到115云下载
-6. （可选）等待下载完成后移动到指定目录
-
-## 文件结构
-
-```
-115cli/
-├── 115cli          # 115网盘CLI wrapper
-├── cli.py          # 115网盘CLI主程序
-├── javdb.py        # JavDB搜索工具
-├── jav115          # 一键下载wrapper
-├── jav115.py       # 一键下载主程序
-├── venv/           # Python虚拟环境
-└── SKILL.md        # 本文件
+scripts/115cli download "magnet:?..." # 添加磁力下载
+scripts/115cli tasks                  # 任务列表
+scripts/115cli ls 目录ID              # 列出目录
+scripts/115cli mv 文件ID 目录ID       # 移动文件
+scripts/115cli search "关键词"        # 搜索文件
 ```
 
 ## 注意事项
 
-- 115 cookie会过期，需要定期更新
-- javdb搜索首次访问会自动确认年龄验证
-- 云下载速度取决于115网盘资源热度
+- 115 cookie会过期，需定期更新
+- javdb首次访问自动确认年龄验证
+- 云下载速度取决于资源热度

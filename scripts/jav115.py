@@ -17,9 +17,10 @@ import time
 console = Console()
 
 SCRIPT_DIR = Path(__file__).parent
+SKILL_DIR = SCRIPT_DIR.parent
 CLI_115 = SCRIPT_DIR / "115cli"
 JAVDB_PY = SCRIPT_DIR / "javdb.py"
-VENV_PYTHON = SCRIPT_DIR / "venv" / "bin" / "python"
+VENV_PYTHON = SKILL_DIR / "venv" / "bin" / "python"
 
 def run_115cli(*args):
     """运行115cli命令"""
